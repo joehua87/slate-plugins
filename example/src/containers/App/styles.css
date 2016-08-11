@@ -1,0 +1,9 @@
+.root {
+  max-width: 940px;
+  margin: 20px auto;
+}
+
+.editor {
+  border: solid 1px black;
+  padding: 1rem;
+}

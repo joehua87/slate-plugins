@@ -1,0 +1,330 @@
+export type CheerioElement = {
+  type: 'tag' | 'text',
+  name?: string,
+  attribs: { [key: string]: any },
+  data: any,
+  children: Array<CheerioElement>,
+}
+
+declare class Character extends Record<any> {
+  marks: Set<Mark>;
+  text: string;
+
+  static create(properties: Object): Set<Mark>;
+  static createList(array: Array<Object>): List<Set<Mark>>;
+}
+
+declare class NodeData extends Map<*, *> {
+  type: string;
+  static create(properties: Object): NodeData;
+};
+
+declare class Html extends Map<*, *> {
+  deserialize(html: string): State;
+  serialize(state: State): string;
+};
+
+declare class Mark extends Record<any> {
+  type: string;
+  data: NodeData;
+  static create(properties: Object): Mark;
+  static createSet(array: Array<Object>): Set<Mark>;
+}
+
+declare class Selection extends Record<any> {
+  // Properties
+  anchorKey: string;
+  anchorOffset: number;
+  focusKey: string;
+  focusOffset: number;
+  isBackward: boolean;
+  isFocused: boolean;
+
+  // Computed Properties
+  isBlurred: boolean;
+  isCollapsed: boolean;
+  isExpanded: boolean;
+  isForward: boolean;
+
+  startKey: string;
+  startOffset: string;
+  endKey: string;
+  endOffset: string;
+
+  // Static Methods
+  static create(properties: Object): Selection;
+
+  // Checking Methods
+  hasAnchorAtStartOf(node: Node): boolean;
+  hasFocusAtStartOf(node: Node): boolean;
+  hasStartAtStartOf(node: Node): boolean;
+  hasEndAtStartOf(node: Node): boolean;
+  hasAnchorAtEndOf(node: Node): boolean;
+  hasFocusAtEndOf(node: Node): boolean;
+  hasStartAtEndOf(node: Node): boolean;
+  hasEndAtEndOf(node: Node): boolean;
+  hasAnchorBetween(node: Node, start: number, end: number): boolean;
+  hasFocusBetween(node: Node, start: number, end: number): boolean;
+  hasStartBetween(node: Node, start: number, end: number): boolean;
+  hasEndBetween(node: Node, start: number, end: number): boolean;
+  hasAnchorIn(node: Node, start: number, end: number): boolean;
+  hasFocusIn(node: Node, start: number, end: number): boolean;
+  hasStartIn(node: Node, start: number, end: number): boolean;
+  hasEndIn(node: Node, start: number, end: number): boolean;
+  hasEdgeIn(node: Node): boolean;
+  isAtStartOf(node: Node): boolean;
+  isAtEndOf(node: Node): boolean;
+
+  // Transforming Methods
+  blur(): Selection;
+  extendBackward(n?: number): Selection;
+  extendForward(n?: number): Selection;
+  extendToEndOf(node: Node): Selection;
+  extendToStartOf(node: Node): Selection;
+  focus(): Selection;
+  moveToAnchor(): Selection;
+  moveToFocus(): Selection;
+  moveToStart(): Selection;
+  moveToEnd(): Selection;
+  moveToEndOf(node: Node): Selection;
+  moveToRangeOf(node: Node): Selection;
+  moveToStartOf(node: Node): Selection;
+  moveBackward(n?: Number): Selection;
+  moveForward(n?: Number): Selection;
+}
+
+declare class Document extends Node {
+
+}
+
+declare class Block extends Node {
+
+}
+
+declare class Inline extends Node {
+
+}
+
+declare class Event extends SyntheticEvent {
+  which: any;
+}
+
+declare class ImmutableRecord {
+  toJS(): Object;
+}
+
+declare class Node extends ImmutableRecord {
+  // Computed Properties
+  nodes: List<Node>;
+  kind: string;
+  type: string;
+  length: number;
+  text: string;
+  data: NodeData;
+
+  // Retrieval Methods
+  filterDescendants(iterator: Function): List<Node>;
+  findDescendant(iterator: Function): ?Node;
+
+  getBlocksAtRange(range: Selection): List<Node>;
+  getBlocks(): List<Node>;
+  getCharactersAtRange(range: Selection): List<Character>;
+  getChild(key: string): ?Node;
+  getChild(node: Node): ?Node;
+  getClosestBlock(key: string): ?Node;
+  getClosestBlock(node: Node): ?Node;
+  getClosestInline(key: string): ?Node;
+  getClosestInline(node: Node): ?Node;
+  getClosest(key: string, match: Function): ?Node;
+  getClosest(node: Node, match: Function): ?Node;
+  getDepth(key: string): number;
+  getDepth(node: Node): number;
+  getDescendant(key: string): ?Node;
+  getDescendant(node: Node): ?Node;
+  getFragmentAtRange(range: Selection): Document;
+  getFurthest(key: string | Node, iterator: (node: Node) => boolean): ?Node;
+  getFurthestBlock(key: string | Node): ?Block;
+  getFurthestInline(key: string | Node): ?Inline;
+  getHighestChild(key: string | Node): ?Node;
+  getHighestOnlyChildParent(key: string | Node): ?Node;
+  getInlinesAtRange(range: Selection): List<Inline>;
+  getMarksAtRange(range: Selection): Set<Mark>;
+  getNextBlock(key: string | Node): ?Node;
+  getNextSibling(key: string | Node): ?Node;
+  getNextSibling(key: string | Node): ?Node;
+  getNextText(key: string | Node): ?Node;
+  getParent(key: string | Node): ?Node;
+  getPreviousBlock(key: string | Node): ?Node;
+  getPreviousSibling(key: string | Node): ?Node;
+  getPreviousSibling(key: string | Node): ?Node;
+  getPreviousText(key: string | Node): ?Node;
+  getTextAtOffset(offset: number): ?Text;
+  getTextsAtRange(range: Selection): List<Text>;
+  hasChild(key: string | Node): boolean;
+  hasDescendant(key: string | Node): boolean;
+
+  // Transform Methods
+  mapDescendants(iterator: Function): Node;
+  removeDescentdant(key: string | Node): Node;
+  updateDescentdant(node: Node): Node;
+}
+
+declare class Transform extends Record<any> {
+  // Document & Selection Transform
+  apply(options?: Object): State;
+  deleteBackward(n: number): Transform;
+  deleteForward(n: number): Transform;
+  delete(): Transform;
+  insertBlock(block: { type: string, isVoid?: boolean, data: Object }): Transform;
+  insertFragment(fragment: Node): Transform;
+  insertText(text: string): Transform;
+  addMark(mark: Mark):Transform;
+  addMark(type: string):Transform;
+  setBlock(properties: Object):Transform;
+  setBlock(type: string):Transform;
+  setInline(properties: Object): Transform;
+  setInline(type: string): Transform;
+  splitBlock(depth?: number): Transform;
+  splitInline(depth?: number): Transform;
+  removeMark(mark: Mark): Transform;
+  removeMark(type: string): Transform;
+  removeNodeByKey(key: string): Transform;
+  toggleMark(type: string): Transform;
+  unwrapBlock(type: string, data?: NodeData): Transform;
+  wrapBlock(type: string, data?: NodeData): Transform;
+  wrapBlock(block: { type: string, data?: any }): Transform;
+  unwrapInline(type: string, data?: NodeData): Transform;
+  wrapInline(type: string, data?: NodeData): Transform;
+  wrapInline(inline: { type: string, data?: any }): Transform;
+
+  // Selection Transform
+  blur(): Transform;
+  collapseToAnchor(): Transform;
+  collapseToFocus(): Transform;
+  collapseToStart(): Transform;
+  collapseToEnd(): Transform;
+
+  collapseToStartOf(node: Node): Transform;
+  collapseToEndOf(node: Node): Transform;
+
+  collapseToStartOfNextBlock(): Transform;
+  collapseToEndOfNextBlock(): Transform;
+  collapseToStartOfPreviousBlock(): Transform;
+  collapseToEndOfPreviousBlock(): Transform;
+  collapseToEndOf(node: Node): Transform;
+
+  collapseToStartOfNextText(): Transform;
+  collapseToEndOfNextText(): Transform;
+  collapseToStartOfPreviousText(): Transform;
+  collapseToEndOfPreviousText(): Transform;
+
+  extendBackward(n: number): Transform;
+  extendForward(n: number): Transform;
+
+  extendToStartOf(node: Node): Transform;
+  extendToEndOf(node: Node): Transform;
+
+  focus(): Transform;
+
+  moveBackward(n: number): Transform;
+  moveForward(n: number): Transform;
+  moveToOffsets(anchorOffset: number, focusOffset: Number): Transform;
+  moveToRangeOf(node: Node): Transform;
+  moveTo(selection: Selection | Object): Transform;
+
+  // Document Transform
+  deleteBackwardAtRange(range: Selection, n: number): Transform;
+  deleteForwardAtRange(range: Selection, n: number): Transform;
+  deleteAtRange(range: Selection): Transform;
+
+  insertFragmentAtRange(range: Selection, fragment: Document): Transform;
+  insertTextAtRange(range: Selection, text: string): Transform;
+
+  addMarkAtRange(range: Selection, mark: Mark): Transform;
+  addMarkAtRange(range: Selection, type: string): Transform;
+  setBlockAtRange(range: Selection, properties: Object): Transform;
+  setBlockAtRange(range: Selection, type: string): Transform;
+  setInlineAtRange(range: Selection, properties: Object): Transform;
+  setInlineAtRange(range: Selection, type: string): Transform;
+  splitBlockAtRange(range: Selection, depth: number): Transform;
+  splitInlineAtRange(range: Selection, depth: number): Transform;
+  removeMarkAtRange(range: Selection, mark: Mark): Transform;
+  removeMarkAtRange(range: Selection, type: string): Transform;
+
+  unwrapBlockAtRange(range: Selection, type?: string, data?: NodeData): Transform;
+  unwrapInlineAtRange(range: Selection, type?: string, data?: NodeData): Transform;
+  wrapBlockAtRange(range: Selection, type: string, data?: NodeData): Transform;
+  wrapInlineAtRange(range: Selection, type: string, data?: NodeData): Transform;
+
+  // History Transform
+  redo(): Transform;
+  undo(): Transform;
+}
+
+declare class State extends Record<any> {
+  // Properties
+  document: Document;
+  selection: Selection;
+
+  // Computed Properties
+  anchorText: Text;
+  focusText: Text;
+  startText: Text;
+  endText: Text;
+  anchorBlock: Block;
+  focusBlock: Block;
+  startBlock: Block;
+  endBlock: Block;
+  marks: Set<Mark>;
+  blocks: List<Block>;
+  fragment: Document;
+  inlines: List<Node>;
+  texts: List<Text>;
+
+  // Selection-Like Properties
+  anchorKey: string;
+  focusKey: string;
+  startKey: string;
+  endKey: string;
+
+  anchorOffset: number;
+  focusOffset: number;
+  startOffset: number;
+  endOffset: number;
+
+  isBackward: boolean;
+  isBlurred: boolean;
+  isCollapsed: boolean;
+  isExpanded: boolean;
+  isFocused: boolean;
+  isForward: boolean;
+
+  static create(properties: Object): State;
+  transform: () => Transform;
+}
+
+declare type EditorDefaultProps = {}
+
+declare type EditorProps = {}
+
+declare class Editor extends React$Component {
+  static defaultProps: EditorDefaultProps;
+  props: EditorProps;
+  onChange: (state: State) => void;
+  getState: () => State;
+}
+
+declare type Raw =  {
+  deserialize(initialState: Object): State;
+  serialize(state: State): Object;
+}
+
+declare module 'slate' {
+  declare module.exports: {
+    State: State;
+    Raw: Raw;
+    Data: Class<NodeData>;
+    Html: Class<Html>;
+    Editor: Class<Editor>
+  }
+}

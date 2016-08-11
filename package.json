@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "bootstrap": "cross-env lerna bootstrap",
+    "build": "cross-env lerna run build",
+    "flow": "flow",
+    "publish": "cross-env npm run build && lerna publish",
+    "lint": "cross-env eslint packages/*/src example/src",
+    "fix-lint": "cross-env eslint --fix packages/*/src example/src",
+    "test": "cross-env npm run lint && lerna run test"
+  },
+  "devDependencies": {
+    "babel-eslint": "6.1.2",
+    "cross-env": "^2.0.0",
+    "eslint": "3.2.2",
+    "eslint-config-airbnb": "10.0.0",
+    "eslint-import-resolver-webpack": "0.4.0",
+    "eslint-plugin-flow-vars": "^0.5.0",
+    "eslint-plugin-import": "1.12.0",
+    "eslint-plugin-jsx-a11y": "2.0.1",
+    "eslint-plugin-react": "6.0.0",
+    "flow-bin": "^0.30.0",
+    "lerna": "2.0.0-beta.24"
+  }
+}

@@ -1,0 +1,29 @@
+[ignore]
+.*/node_modules/babel.*
+.*/node_modules/editions/.*
+.*/node_modules/fbjs/.*
+.*/node_modules/immutable/.*
+.*/node_modules/.*.json
+
+// Prevent duplicated react modules
+.*/packages/.*/node_modules/react/.*
+
+// Remove this when remove slate-table
+.*/slate-table/node_modules/react/.*
+
+// Use modules from example as main react module
+// .*/example/node_modules/react/.*
+
+[include]
+
+[libs]
+./example/node_modules/immutable/dist/immutable.js.flow
+./flow-typed/modules.js.flow
+./flow-typed/slate.js.flow
+
+[options]
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+module.system=haste
+unsafe.enable_getters_and_setters=true
+module.name_mapper='.*\(.s?css\)$' -> 'CSSModule'

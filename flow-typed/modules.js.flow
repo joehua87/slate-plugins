@@ -1,0 +1,31 @@
+declare module 'CSSModule' {
+  declare var exports: { [key: string]: string };
+}
+
+declare module 'immutable' {
+  declare var exports: any
+}
+
+declare module 'is-image' {
+  declare var exports: any
+}
+
+declare module 'is-url' {
+  declare var exports: any
+}
+
+declare module 'react-portal' {
+  declare var exports: any
+}
+
+declare module 'selection-position' {
+  declare var exports: any
+}
+
+declare module 'slate-edit-list' {
+  declare var exports: any
+}
+
+declare module 'slate-edit-table' {
+  declare var exports: any
+}
