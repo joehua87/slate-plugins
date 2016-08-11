@@ -11,7 +11,3 @@ cd example
 npm install
 npm start
 ```
-
-## TODO
-* Publish to Github Page
-* ...
