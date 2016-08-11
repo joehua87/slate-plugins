@@ -138,7 +138,7 @@ class SlateEditor extends React.Component {
     const src = window.prompt('Enter the URL of the image:')
     if (!src) return
     let { state } = this.state
-    state = insertImage(state, src)
+    state = insertImage(state.transform().wrapBlock({ type: 'table_cell' }).apply(), src)
     this.onChange(state)
   };
 

@@ -3,6 +3,7 @@
     "bootstrap": "cross-env lerna bootstrap",
     "build": "cross-env lerna run build",
     "flow": "flow",
+    "gh-pages": "node scripts/gh-pages.js",
     "publish": "cross-env npm run build && lerna publish",
     "lint": "cross-env eslint packages/*/src example/src",
     "fix-lint": "cross-env eslint --fix packages/*/src example/src",
@@ -19,6 +20,7 @@
     "eslint-plugin-jsx-a11y": "2.0.1",
     "eslint-plugin-react": "6.0.0",
     "flow-bin": "^0.30.0",
+    "gh-pages": "^0.11.0",
     "lerna": "2.0.0-beta.24"
   }
 }

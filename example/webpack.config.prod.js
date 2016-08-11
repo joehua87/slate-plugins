@@ -1,22 +1,32 @@
 const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
+const CleanPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const assetsPath = path.resolve(process.cwd(), 'static')
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: [
-    'webpack-hot-middleware/client',
-    './src/index'
+    path.join(__dirname, './src/index'),
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
   plugins: [
+    new CleanPlugin([assetsPath], { root: process.cwd() }),
+    new ExtractTextPlugin('style.css', { allChunks: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      }
+    }),
   ],
+  /*
   resolve: {
     alias: {
       'slate-plugins-rich-text': path.join(__dirname, '..', 'packages/slate-plugins-rich-text/src'),
@@ -25,6 +35,7 @@ module.exports = {
       'slate-plugins-paste-html': path.join(__dirname, '..', 'packages/slate-plugins-paste-html/src'),
     }
   },
+  */
   module: {
     loaders: [
       {

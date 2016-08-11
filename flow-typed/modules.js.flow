@@ -29,3 +29,19 @@ declare module 'slate-edit-list' {
 declare module 'slate-edit-table' {
   declare var exports: any
 }
+
+declare module 'slate-plugins-link' {
+  declare var exports: any
+}
+
+declare module 'slate-plugins-rich-text' {
+  declare var exports: any
+}
+
+declare module 'slate-plugins-image' {
+  declare var exports: any
+}
+
+declare module 'slate-plugins-paste-html' {
+  declare var exports: any
+}
